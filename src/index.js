@@ -18,6 +18,11 @@ function createDiv(container, className) {
   return div;
 }
 const keyboardWrapper = createDiv(wrapper, 'keyboard-wrapper');
+
+const inputField = document.createElement('input');
+inputField.className = 'text';
+keyboardWrapper.appendChild(inputField);
+
 const keyboardBtns = createDiv(keyboardWrapper, 'keyboard-btns');
 
 const keyBctc = new Key('div', 'key', '`');
@@ -46,7 +51,7 @@ const keyLine = new Key('div', 'key', '-');
 keyboardBtns.appendChild(keyLine.getElement);
 const keyEqual = new Key('div', 'key', '=');
 keyboardBtns.appendChild(keyEqual.getElement);
-const keyBackspace = new Key('div', 'key key_backspace', '←');
+const keyBackspace = new Key('div', 'key key_backspace', 'Backspace');
 keyboardBtns.appendChild(keyBackspace.getElement);
 
 const keyTab = new Key('div', 'key key_tab', 'Tab');
@@ -75,8 +80,81 @@ const keyBrL = new Key('div', 'key', '[');
 keyboardBtns.appendChild(keyBrL.getElement);
 const keyBrR = new Key('div', 'key', ']');
 keyboardBtns.appendChild(keyBrR.getElement);
-const keySlash = new Key('div', 'key key_bslash', '\\');
+const keyBSlash = new Key('div', 'key key_bslash', '\\');
+keyboardBtns.appendChild(keyBSlash.getElement);
+
+const keyCapslock = new Key('div', 'key key_capslock', 'Caps lock');
+keyboardBtns.appendChild(keyCapslock.getElement);
+const keyA = new Key('div', 'key', 'A');
+keyboardBtns.appendChild(keyA.getElement);
+const keyS = new Key('div', 'key', 'S');
+keyboardBtns.appendChild(keyS.getElement);
+const keyD = new Key('div', 'key', 'D');
+keyboardBtns.appendChild(keyD.getElement);
+const keyF = new Key('div', 'key', 'F');
+keyboardBtns.appendChild(keyF.getElement);
+const keyG = new Key('div', 'key', 'G');
+keyboardBtns.appendChild(keyG.getElement);
+const keyH = new Key('div', 'key', 'H');
+keyboardBtns.appendChild(keyH.getElement);
+const keyJ = new Key('div', 'key', 'J');
+keyboardBtns.appendChild(keyJ.getElement);
+const keyK = new Key('div', 'key', 'K');
+keyboardBtns.appendChild(keyK.getElement);
+const keyL = new Key('div', 'key', 'L');
+keyboardBtns.appendChild(keyL.getElement);
+const keySemicolon = new Key('div', 'key', ';');
+keyboardBtns.appendChild(keySemicolon.getElement);
+const keyTick = new Key('div', 'key', "'");
+keyboardBtns.appendChild(keyTick.getElement);
+const keyEnter = new Key('div', 'key key_enter', 'Enter');
+keyboardBtns.appendChild(keyEnter.getElement);
+
+const keyShiftL = new Key('div', 'key key_shiftr', 'Shift');
+keyboardBtns.appendChild(keyShiftL.getElement);
+const keyZ = new Key('div', 'key', 'Z');
+keyboardBtns.appendChild(keyZ.getElement);
+const keyX = new Key('div', 'key', 'X');
+keyboardBtns.appendChild(keyX.getElement);
+const keyC = new Key('div', 'key', 'C');
+keyboardBtns.appendChild(keyC.getElement);
+const keyV = new Key('div', 'key', 'V');
+keyboardBtns.appendChild(keyV.getElement);
+const keyB = new Key('div', 'key', 'B');
+keyboardBtns.appendChild(keyB.getElement);
+const keyN = new Key('div', 'key', 'N');
+keyboardBtns.appendChild(keyN.getElement);
+const keyM = new Key('div', 'key', 'M');
+keyboardBtns.appendChild(keyM.getElement);
+const keyComma = new Key('div', 'key', ',');
+keyboardBtns.appendChild(keyComma.getElement);
+const keyPoint = new Key('div', 'key', '.');
+keyboardBtns.appendChild(keyPoint.getElement);
+const keyUp = new Key('div', 'key', '▲');
+keyboardBtns.appendChild(keyUp.getElement);
+const keySlash = new Key('div', 'key', '/');
 keyboardBtns.appendChild(keySlash.getElement);
+const keyShiftR = new Key('div', 'key key_ctrl', 'Ctrl');
+keyboardBtns.appendChild(keyShiftR.getElement);
+
+const keyCtrlL = new Key('div', 'key key_ctrl', 'Ctrl');
+keyboardBtns.appendChild(keyCtrlL.getElement);
+const keyWin = new Key('div', 'key', 'Win');
+keyboardBtns.appendChild(keyWin.getElement);
+const keyAltL = new Key('div', 'key', 'Alt');
+keyboardBtns.appendChild(keyAltL.getElement);
+const keySpace = new Key('div', 'key key_space', '');
+keyboardBtns.appendChild(keySpace.getElement);
+const keyAltR = new Key('div', 'key', 'Alt');
+keyboardBtns.appendChild(keyAltR.getElement);
+const keyLeft = new Key('div', 'key', '◀');
+keyboardBtns.appendChild(keyLeft.getElement);
+const keyDown = new Key('div', 'key', '▼');
+keyboardBtns.appendChild(keyDown.getElement);
+const keyRight = new Key('div', 'key', '▶');
+keyboardBtns.appendChild(keyRight.getElement);
+const keyCtrlR = new Key('div', 'key key_ctrl', 'Ctrl');
+keyboardBtns.appendChild(keyCtrlR.getElement);
 
 const paragraph = document.createElement('p');
 paragraph.innerText = 'Комбинация для переключения языковой раскладки: левые ctrl + alt';

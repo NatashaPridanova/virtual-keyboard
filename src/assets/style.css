@@ -1,55 +1,105 @@
-@font-face {
-    font-family: 'Montserrat';
-    src: url('./Montserrat-Regular.ttf');
-    font-weight: 400;
-    font-style: normal;
-}
-
-.wrapper {
-    width: calc(100% - 40px);
-    height: 100vh;
-    margin: 0 auto;
-    background-color: plum;
-    font-family: 'Montserrat';
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.keyboard-wrapper {
-    width: 90%;
-    height: 40%;
-    margin: 0 auto;
-    background-color: sandybrown;
-}
-
-.keyboard-btns {
-    width: 100%;
-    height: 100%;
-    margin: 0 auto;
-    background-color: black;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1%;
-}
-
-.key {
-    width: 5.5%;
-    height: 18%;
-    border-radius: 15%;
-    margin: 1% 0;
-    background-color: aquamarine;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.key_backspace {
-    width: 10%
-}
-
-.key_tab,
-.key_bslash {
-    width: 7.5%;
-}
+        @font-face {
+            font-family: 'Montserrat';
+            src: url('./Montserrat-Regular.ttf');
+            font-weight: 400;
+            font-style: normal;
+        }
+        
+        .wrapper {
+            width: calc(100% - 40px);
+            height: 100vh;
+            margin: 0 auto;
+            background-color: plum;
+            font-family: 'Montserrat';
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .keyboard-wrapper {
+            max-width: 1000px;
+            width: 90%;
+            height: 40%;
+            margin: 0 auto;
+            background-color: sandybrown;
+        }
+        
+        .keyboard-btns {
+            width: 100%;
+            height: 100%;
+            margin: 0 auto;
+            background-color: black;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1%;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .key {
+            width: 5.5%;
+            height: 18%;
+            border-radius: 15%;
+            margin: 1px;
+            background-color: aquamarine;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.2s;
+        }
+        
+        .key_backspace {
+            width: 10%
+        }
+        
+        .key_tab,
+        .key_bslash {
+            width: 7.5%;
+        }
+        
+        .key_enter,
+        .key_shiftr {
+            width: 15%;
+        }
+        
+        .key_space {
+            width: 42%;
+        }
+        
+        .text {
+            width: 100%;
+            height: 90px;
+            margin-bottom: 30px;
+            overflow: auto;
+            outline: none;
+            font-size: 20px;
+            padding-left: 20px;
+            transition: 0.2s;
+        }
+        
+        .paragraph {
+            margin-top: 150px;
+        }
+        
+        .key:hover {
+            background-color: bisque;
+            cursor: pointer;
+        }
+        
+        .key.active {
+            background-color: bisque;
+        }
+        
+        .key.remove {
+            animation: keys_animation 0.5s forwards;
+        }
+        
+        @keyframes keys_animation {
+            0% {
+                background-color: bisque;
+            }
+            100% {
+                background-color: aquamarine;
+            }
+        }
