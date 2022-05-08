@@ -19,9 +19,9 @@ function createDiv(container, className) {
 }
 const keyboardWrapper = createDiv(wrapper, 'keyboard-wrapper');
 
-const inputField = document.createElement('input');
+const inputField = document.createElement('textarea');
 inputField.className = 'text';
-inputField.setAttribute('readonly', 'readonly');
+
 keyboardWrapper.appendChild(inputField);
 
 const keyboardBtns = createDiv(keyboardWrapper, 'keyboard-btns');
@@ -52,7 +52,7 @@ const keyLine = new Key('div', 'key', '-');
 keyboardBtns.appendChild(keyLine.getElement);
 const keyEqual = new Key('div', 'key', '=');
 keyboardBtns.appendChild(keyEqual.getElement);
-const keyBackspace = new Key('div', 'key key_backspace', 'Backspace');
+const keyBackspace = new Key('div', 'key key_backspace key_special', 'Backspace');
 keyboardBtns.appendChild(keyBackspace.getElement);
 
 const keyTab = new Key('div', 'key key_tab key_special', 'Tab');
@@ -111,7 +111,7 @@ keyboardBtns.appendChild(keyTick.getElement);
 const keyEnter = new Key('div', 'key key_enter key_special', 'Enter');
 keyboardBtns.appendChild(keyEnter.getElement);
 
-const keyShiftL = new Key('div', 'key key_shiftl key_special', 'Shift');
+const keyShiftL = new Key('div', 'key key_shiftl  key_left', 'Shift');
 keyboardBtns.appendChild(keyShiftL.getElement);
 const keyZ = new Key('div', 'key', 'Z');
 keyboardBtns.appendChild(keyZ.getElement);
@@ -138,11 +138,11 @@ keyboardBtns.appendChild(keySlash.getElement);
 const keyShiftR = new Key('div', 'key key_shiftr key_special key_special', 'Shift');
 keyboardBtns.appendChild(keyShiftR.getElement);
 
-const keyCtrlL = new Key('div', 'key key_ctrl key_special', 'Ctrl');
+const keyCtrlL = new Key('div', 'key key_ctrl key_special key_left', 'Ctrl');
 keyboardBtns.appendChild(keyCtrlL.getElement);
 const keyWin = new Key('div', 'key key_special', 'Win');
 keyboardBtns.appendChild(keyWin.getElement);
-const keyAltL = new Key('div', 'key key_special', 'Alt');
+const keyAltL = new Key('div', 'key key_special key_left', 'Alt');
 keyboardBtns.appendChild(keyAltL.getElement);
 const keySpace = new Key('div', 'key key_space', '');
 keyboardBtns.appendChild(keySpace.getElement);
@@ -161,3 +161,85 @@ const paragraph = document.createElement('p');
 paragraph.innerText = 'Комбинация для переключения языковой раскладки: левые ctrl + alt';
 paragraph.className = 'paragraph';
 wrapper.appendChild(paragraph);
+
+const keys = document.querySelectorAll('.key');
+
+for (let i = 0; i < keys.length; i += 1) {
+  keys[i].setAttribute('keyName', keys[i].innerText);
+  keys[i].setAttribute('lowerCaseName', keys[i].innerText.toLowerCase());
+  if (keys[i].getAttribute('keyname') === 'Ctrl') {
+    if (keys[i].classList.contains('key_left')) {
+      keys[i].setAttribute('keyName', 'ControlLeft');
+    } else {
+      keys[i].setAttribute('keyName', 'ControlRight');
+    }
+  }
+  if (keys[i].getAttribute('keyname') === 'Alt') {
+    if (keys[i].classList.contains('key_left')) {
+      keys[i].setAttribute('keyName', 'AltLeft');
+    } else {
+      keys[i].setAttribute('keyName', 'AltRight');
+    }
+  }
+  if (keys[i].getAttribute('keyname') === 'Shift') {
+    if (keys[i].classList.contains('key_left')) {
+      keys[i].setAttribute('keyName', 'ShiftLeft');
+    } else {
+      keys[i].setAttribute('keyName', 'ShiftRight');
+    }
+  }
+  if (keys[i].getAttribute('keyname') === 'Win') {
+    keys[i].setAttribute('keyName', 'Meta');
+  }
+  if (keys[i].getAttribute('keyname') === '▶') {
+    keys[i].setAttribute('keyName', 'ArrowRight');
+  }
+  if (keys[i].getAttribute('keyname') === '◀') {
+    keys[i].setAttribute('keyName', 'ArrowLeft');
+  }
+  if (keys[i].getAttribute('keyname') === '▲') {
+    keys[i].setAttribute('keyName', 'ArrowUp');
+  }
+  if (keys[i].getAttribute('keyname') === '▼') {
+    keys[i].setAttribute('keyName', 'ArrowDown');
+  }
+}
+
+document.addEventListener('keypress', (event) => {
+  event.preventDefault();
+  if (event.key !== 'Enter') {
+    inputField.value += event.key;
+  }
+  keys.forEach((key) => {
+    if (event.key === key.getAttribute('keyname') || event.key === key.getAttribute('lowerCaseName') || event.code === key.getAttribute('keyname')) {
+      key.classList.add('active');
+    }
+  });
+});
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Backspace') {
+    inputField.value = inputField.value.slice(0, -1);
+  } else if (event.key === 'ArrowUp') {
+    inputField.value += '▲';
+  } else if (event.key === 'ArrowDown') {
+    inputField.value += '▼';
+  } else if (event.key === 'ArrowRight') {
+    inputField.value += '▶';
+  } else if (event.key === 'ArrowLeft') {
+    inputField.value += '◀';
+  }
+  keys.forEach((key) => {
+    if (event.key === key.getAttribute('keyname') || event.key === key.getAttribute('lowerCaseName') || event.code === key.getAttribute('keyname')) {
+      key.classList.add('active');
+    }
+  });
+});
+document.addEventListener('keyup', (event) => {
+  keys.forEach((key) => {
+    if (event.key === key.getAttribute('keyname') || event.key === key.getAttribute('lowerCaseName') || event.code === key.getAttribute('keyname')) {
+      key.classList.remove('active');
+      key.classList.add('remove');
+    }
+    setTimeout(() => { key.classList.remove('remove'); }, 500);
+  });
+});

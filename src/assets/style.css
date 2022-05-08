@@ -121,9 +121,9 @@
         
         @keyframes keys_animation {
             0% {
-                background-color: bisque;
+                background-color: #17A589;
             }
             100% {
-                background-color: aquamarine;
+                background-color: #17A589;
             }
         }
