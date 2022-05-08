@@ -206,6 +206,19 @@ function makeCaps(isCapsLock) {
     btn.innerText = key.innerText.toLowerCase();
   });
 }
+
+function ctrlListener(e) {
+  if (e.code === 'ControlLeft') {
+    if (langMode === 'en') {
+      drawKeyboard('ru');
+    } else if (langMode === 'ru') {
+      drawKeyboard('en');
+    }
+  } else {
+    document.removeEventListener('keyup', ctrlListener);
+  }
+}
+
 for (let i = 0; i < keys.length; i += 1) {
   keys[i].setAttribute('keyName', keys[i].innerText);
   keys[i].setAttribute('lowerCaseName', keys[i].innerText.toLowerCase());
@@ -294,6 +307,9 @@ document.addEventListener('keydown', (event) => {
       drawKeyboard('ruShift');
     }
   }
+  if (event.ctrlKey) {
+    document.addEventListener('keyup', ctrlListener);
+  }
 });
 
 document.addEventListener('keyup', (event) => {
@@ -317,3 +333,16 @@ keys.forEach((key) => {
   if (key.classList.contains('key_special') || key.classList.contains('key_arrow') || key.classList.contains('key_space')) return;
   key.setAttribute('data-i18', `${key.getAttribute('lowerCaseName')}`);
 });
+
+function setLocalStorage() {
+  localStorage.setItem('langMode', langMode);
+}
+window.addEventListener('beforeunload', setLocalStorage);
+
+function getLocalStorage() {
+  if (localStorage.getItem('langMode')) {
+    const lang = localStorage.getItem('langMode');
+    drawKeyboard(lang);
+  }
+}
+window.addEventListener('load', getLocalStorage);
