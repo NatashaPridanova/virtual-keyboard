@@ -157,10 +157,14 @@ keyboardBtns.appendChild(keyRight.getElement);
 const keyCtrlR = new Key('div', 'key key_ctrl key_special', 'Ctrl');
 keyboardBtns.appendChild(keyCtrlR.getElement);
 
-const paragraph = document.createElement('p');
-paragraph.innerText = 'Комбинация для переключения языковой раскладки: левые ctrl + alt';
-paragraph.className = 'paragraph';
-wrapper.appendChild(paragraph);
+const paragraph1 = document.createElement('p');
+paragraph1.innerText = 'Комбинация для переключения языковой раскладки: левые ctrl + alt';
+paragraph1.className = 'paragraph';
+wrapper.appendChild(paragraph1);
+const paragraph2 = document.createElement('p');
+paragraph2.innerText = 'Клавиатура создана в операционной системе Windows';
+paragraph2.className = 'paragraph';
+wrapper.appendChild(paragraph2);
 
 const keys = document.querySelectorAll('.key');
 
