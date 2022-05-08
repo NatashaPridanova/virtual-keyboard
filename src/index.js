@@ -3,7 +3,8 @@ import './assets/style.css';
 import Key from './keyclass';
 import i18Obj from './typesOfKeys';
 
-let langMode = 'ru';
+let langMode = 'en';
+let capsLockOn = false;
 
 function drawKeyboard(lang) {
   const keysToDraw = document.querySelectorAll('[data-i18]');
@@ -70,25 +71,25 @@ keyboardBtns.appendChild(keyBackspace.getElement);
 
 const keyTab = new Key('div', 'key key_tab key_special', 'Tab');
 keyboardBtns.appendChild(keyTab.getElement);
-const keyQ = new Key('div', 'key', 'Q');
+const keyQ = new Key('div', 'key', 'q');
 keyboardBtns.appendChild(keyQ.getElement);
-const keyW = new Key('div', 'key', 'W');
+const keyW = new Key('div', 'key', 'w');
 keyboardBtns.appendChild(keyW.getElement);
-const keyE = new Key('div', 'key', 'E');
+const keyE = new Key('div', 'key', 'e');
 keyboardBtns.appendChild(keyE.getElement);
-const keyR = new Key('div', 'key', 'R');
+const keyR = new Key('div', 'key', 'r');
 keyboardBtns.appendChild(keyR.getElement);
-const keyT = new Key('div', 'key', 'T');
+const keyT = new Key('div', 'key', 't');
 keyboardBtns.appendChild(keyT.getElement);
-const keyY = new Key('div', 'key', 'Y');
+const keyY = new Key('div', 'key', 'y');
 keyboardBtns.appendChild(keyY.getElement);
-const keyU = new Key('div', 'key', 'U');
+const keyU = new Key('div', 'key', 'u');
 keyboardBtns.appendChild(keyU.getElement);
-const keyI = new Key('div', 'key', 'I');
+const keyI = new Key('div', 'key', 'i');
 keyboardBtns.appendChild(keyI.getElement);
-const keyO = new Key('div', 'key', 'O');
+const keyO = new Key('div', 'key', 'o');
 keyboardBtns.appendChild(keyO.getElement);
-const keyP = new Key('div', 'key', 'P');
+const keyP = new Key('div', 'key', 'p');
 keyboardBtns.appendChild(keyP.getElement);
 const keyBrL = new Key('div', 'key', '[');
 keyboardBtns.appendChild(keyBrL.getElement);
@@ -99,23 +100,23 @@ keyboardBtns.appendChild(keyBSlash.getElement);
 
 const keyCapslock = new Key('div', 'key key_capslock key_special', 'CapsLock');
 keyboardBtns.appendChild(keyCapslock.getElement);
-const keyA = new Key('div', 'key', 'A');
+const keyA = new Key('div', 'key', 'a');
 keyboardBtns.appendChild(keyA.getElement);
-const keyS = new Key('div', 'key', 'S');
+const keyS = new Key('div', 'key', 's');
 keyboardBtns.appendChild(keyS.getElement);
-const keyD = new Key('div', 'key', 'D');
+const keyD = new Key('div', 'key', 'd');
 keyboardBtns.appendChild(keyD.getElement);
-const keyF = new Key('div', 'key', 'F');
+const keyF = new Key('div', 'key', 'f');
 keyboardBtns.appendChild(keyF.getElement);
-const keyG = new Key('div', 'key', 'G');
+const keyG = new Key('div', 'key', 'g');
 keyboardBtns.appendChild(keyG.getElement);
-const keyH = new Key('div', 'key', 'H');
+const keyH = new Key('div', 'key', 'h');
 keyboardBtns.appendChild(keyH.getElement);
-const keyJ = new Key('div', 'key', 'J');
+const keyJ = new Key('div', 'key', 'j');
 keyboardBtns.appendChild(keyJ.getElement);
-const keyK = new Key('div', 'key', 'K');
+const keyK = new Key('div', 'key', 'k');
 keyboardBtns.appendChild(keyK.getElement);
-const keyL = new Key('div', 'key', 'L');
+const keyL = new Key('div', 'key', 'l');
 keyboardBtns.appendChild(keyL.getElement);
 const keySemicolon = new Key('div', 'key', ';');
 keyboardBtns.appendChild(keySemicolon.getElement);
@@ -126,19 +127,19 @@ keyboardBtns.appendChild(keyEnter.getElement);
 
 const keyShiftL = new Key('div', 'key key_shiftl key_left key_special', 'Shift');
 keyboardBtns.appendChild(keyShiftL.getElement);
-const keyZ = new Key('div', 'key', 'Z');
+const keyZ = new Key('div', 'key', 'z');
 keyboardBtns.appendChild(keyZ.getElement);
-const keyX = new Key('div', 'key', 'X');
+const keyX = new Key('div', 'key', 'x');
 keyboardBtns.appendChild(keyX.getElement);
-const keyC = new Key('div', 'key', 'C');
+const keyC = new Key('div', 'key', 'c');
 keyboardBtns.appendChild(keyC.getElement);
-const keyV = new Key('div', 'key', 'V');
+const keyV = new Key('div', 'key', 'v');
 keyboardBtns.appendChild(keyV.getElement);
-const keyB = new Key('div', 'key', 'B');
+const keyB = new Key('div', 'key', 'b');
 keyboardBtns.appendChild(keyB.getElement);
-const keyN = new Key('div', 'key', 'N');
+const keyN = new Key('div', 'key', 'n');
 keyboardBtns.appendChild(keyN.getElement);
-const keyM = new Key('div', 'key', 'M');
+const keyM = new Key('div', 'key', 'm');
 keyboardBtns.appendChild(keyM.getElement);
 const keyComma = new Key('div', 'key', ',');
 keyboardBtns.appendChild(keyComma.getElement);
@@ -180,7 +181,31 @@ paragraph2.className = 'paragraph';
 wrapper.appendChild(paragraph2);
 
 const keys = document.querySelectorAll('.key');
+const capsKey = document.querySelector('.key_capslock');
 
+function makeCaps(isCapsLock) {
+  if (!isCapsLock) {
+    keys.forEach((key) => {
+      if (key.classList.contains('key_special') || key.classList.contains('key_arrow') || key.classList.contains('key_space')) {
+        return;
+      }
+      const btn = key;
+      btn.innerText = key.innerText.toUpperCase();
+    });
+    capsLockOn = true;
+    capsKey.classList.toggle('active');
+    return;
+  }
+  capsLockOn = false;
+  capsKey.classList.toggle('active');
+  keys.forEach((key) => {
+    if (key.classList.contains('key_special') || key.classList.contains('key_arrow') || key.classList.contains('key_space')) {
+      return;
+    }
+    const btn = key;
+    btn.innerText = key.innerText.toLowerCase();
+  });
+}
 for (let i = 0; i < keys.length; i += 1) {
   keys[i].setAttribute('keyName', keys[i].innerText);
   keys[i].setAttribute('lowerCaseName', keys[i].innerText.toLowerCase());
@@ -232,7 +257,7 @@ document.addEventListener('keypress', (event) => {
   event.preventDefault();
   if (event.key !== 'Enter') {
     inputField.value += event.key;
-  } else {
+  } else if (event.key === 'Enter') {
     inputField.value += '\n\r';
   }
   keys.forEach((key) => {
@@ -253,6 +278,9 @@ document.addEventListener('keydown', (event) => {
     inputField.value += '▶';
   } else if (event.key === 'ArrowLeft') {
     inputField.value += '◀';
+  } else if (event.key === 'CapsLock') {
+    makeCaps(capsLockOn);
+    return;
   }
   keys.forEach((key) => {
     if (event.key === key.getAttribute('keyname') || event.key === key.getAttribute('lowerCaseName') || event.code === key.getAttribute('keyname')) {
@@ -262,13 +290,14 @@ document.addEventListener('keydown', (event) => {
   if (event.shiftKey) {
     if (langMode === 'en') {
       drawKeyboard('enShift');
-    } else {
+    } else if (langMode === 'ru') {
       drawKeyboard('ruShift');
     }
   }
 });
 
 document.addEventListener('keyup', (event) => {
+  if (event.key === 'CapsLock') return;
   keys.forEach((key) => {
     if (event.key === key.getAttribute('keyname') || event.key === key.getAttribute('lowerCaseName') || event.code === key.getAttribute('keyname')) {
       key.classList.remove('active');
@@ -277,6 +306,8 @@ document.addEventListener('keyup', (event) => {
     setTimeout(() => { key.classList.remove('remove'); }, 500);
   });
   if (event.key === 'Shift') {
+    capsKey.classList.remove('active');
+    capsLockOn = false;
     if (langMode === 'enShift') {
       drawKeyboard('en');
     } else { drawKeyboard('ru'); }

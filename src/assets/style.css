@@ -101,6 +101,7 @@
             overflow: auto;
             outline: none;
             font-size: 20px;
+            line-height: 0.8em;
             padding-left: 20px;
             transition: 0.2s;
         }
