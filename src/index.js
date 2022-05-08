@@ -1,6 +1,19 @@
 import './assets/normalize.css';
 import './assets/style.css';
 import Key from './keyclass';
+import i18Obj from './typesOfKeys';
+
+let langMode = 'ru';
+
+function drawKeyboard(lang) {
+  const keysToDraw = document.querySelectorAll('[data-i18]');
+  keysToDraw.forEach((el) => {
+    const btn = el;
+    btn.innerText = i18Obj[lang][el.dataset.i18];
+  });
+  langMode = lang;
+}
+drawKeyboard(langMode);
 
 const wrapper = document.createElement('div');
 wrapper.className = 'wrapper';
@@ -111,7 +124,7 @@ keyboardBtns.appendChild(keyTick.getElement);
 const keyEnter = new Key('div', 'key key_enter key_special', 'Enter');
 keyboardBtns.appendChild(keyEnter.getElement);
 
-const keyShiftL = new Key('div', 'key key_shiftl  key_left', 'Shift');
+const keyShiftL = new Key('div', 'key key_shiftl key_left key_special', 'Shift');
 keyboardBtns.appendChild(keyShiftL.getElement);
 const keyZ = new Key('div', 'key', 'Z');
 keyboardBtns.appendChild(keyZ.getElement);
@@ -171,6 +184,9 @@ const keys = document.querySelectorAll('.key');
 for (let i = 0; i < keys.length; i += 1) {
   keys[i].setAttribute('keyName', keys[i].innerText);
   keys[i].setAttribute('lowerCaseName', keys[i].innerText.toLowerCase());
+  if (keys[i].getAttribute('keyname') === '') {
+    keys[i].setAttribute('keyName', 'Space');
+  }
   if (keys[i].getAttribute('keyname') === 'Ctrl') {
     if (keys[i].classList.contains('key_left')) {
       keys[i].setAttribute('keyName', 'ControlLeft');
@@ -207,12 +223,17 @@ for (let i = 0; i < keys.length; i += 1) {
   if (keys[i].getAttribute('keyname') === '▼') {
     keys[i].setAttribute('keyName', 'ArrowDown');
   }
+  if (keys[i].getAttribute('keyname') === 'A') {
+    keys[i].setAttribute('data-i18', 'a');
+  }
 }
 
 document.addEventListener('keypress', (event) => {
   event.preventDefault();
   if (event.key !== 'Enter') {
     inputField.value += event.key;
+  } else {
+    inputField.value += '\n\r';
   }
   keys.forEach((key) => {
     if (event.key === key.getAttribute('keyname') || event.key === key.getAttribute('lowerCaseName') || event.code === key.getAttribute('keyname')) {
@@ -220,6 +241,7 @@ document.addEventListener('keypress', (event) => {
     }
   });
 });
+
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Backspace') {
     inputField.value = inputField.value.slice(0, -1);
@@ -237,7 +259,15 @@ document.addEventListener('keydown', (event) => {
       key.classList.add('active');
     }
   });
+  if (event.shiftKey) {
+    if (langMode === 'en') {
+      drawKeyboard('enShift');
+    } else {
+      drawKeyboard('ruShift');
+    }
+  }
 });
+
 document.addEventListener('keyup', (event) => {
   keys.forEach((key) => {
     if (event.key === key.getAttribute('keyname') || event.key === key.getAttribute('lowerCaseName') || event.code === key.getAttribute('keyname')) {
@@ -246,4 +276,13 @@ document.addEventListener('keyup', (event) => {
     }
     setTimeout(() => { key.classList.remove('remove'); }, 500);
   });
+  if (event.key === 'Shift') {
+    if (langMode === 'enShift') {
+      drawKeyboard('en');
+    } else { drawKeyboard('ru'); }
+  }
+});
+keys.forEach((key) => {
+  if (key.classList.contains('key_special') || key.classList.contains('key_arrow') || key.classList.contains('key_space')) return;
+  key.setAttribute('data-i18', `${key.getAttribute('lowerCaseName')}`);
 });
