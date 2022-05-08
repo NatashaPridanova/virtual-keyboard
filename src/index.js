@@ -274,7 +274,7 @@ document.addEventListener('keypress', (event) => {
     inputField.value += '\n\r';
   }
   keys.forEach((key) => {
-    if (event.key === key.getAttribute('keyname') || event.key === key.getAttribute('lowerCaseName') || event.code === key.getAttribute('keyname')) {
+    if (event.key === key.getAttribute('keyname') || event.key === key.getAttribute('lowerCaseName') || event.code === key.getAttribute('keyname') || event.key === key.getAttribute('keyru') || event.key === key.getAttribute('ruLowerCase')) {
       key.classList.add('active');
     }
   });
@@ -315,7 +315,7 @@ document.addEventListener('keydown', (event) => {
 document.addEventListener('keyup', (event) => {
   if (event.key === 'CapsLock') return;
   keys.forEach((key) => {
-    if (event.key === key.getAttribute('keyname') || event.key === key.getAttribute('lowerCaseName') || event.code === key.getAttribute('keyname')) {
+    if (event.key === key.getAttribute('keyname') || event.key === key.getAttribute('lowerCaseName') || event.code === key.getAttribute('keyname') || event.key === key.getAttribute('keyru') || event.key === key.getAttribute('ruLowerCase')) {
       key.classList.remove('active');
       key.classList.add('remove');
     }
@@ -332,6 +332,10 @@ document.addEventListener('keyup', (event) => {
 keys.forEach((key) => {
   if (key.classList.contains('key_special') || key.classList.contains('key_arrow') || key.classList.contains('key_space')) return;
   key.setAttribute('data-i18', `${key.getAttribute('lowerCaseName')}`);
+  const RU_VAL = i18Obj.ru;
+  const RU_SHIFT_VAL = i18Obj.ruShift;
+  key.setAttribute('keyru', `${RU_VAL[key.dataset.i18]}`);
+  key.setAttribute('ruLowerCase', `${RU_SHIFT_VAL[key.dataset.i18]}`);
 });
 
 function setLocalStorage() {
