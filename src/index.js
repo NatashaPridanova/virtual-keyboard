@@ -208,7 +208,7 @@ function makeCaps(isCapsLock) {
 }
 
 function ctrlListener(e) {
-  if (e.code === 'ControlLeft') {
+  if (e.code === 'AltLeft') {
     if (langMode === 'en') {
       drawKeyboard('ru');
     } else if (langMode === 'ru') {
@@ -308,7 +308,7 @@ document.addEventListener('keydown', (event) => {
     }
   }
   if (event.ctrlKey) {
-    document.addEventListener('keyup', ctrlListener);
+    document.addEventListener('keyup', ctrlListener(event));
   }
 });
 
