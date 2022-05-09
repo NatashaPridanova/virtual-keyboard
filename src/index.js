@@ -294,9 +294,12 @@ document.addEventListener('keydown', (event) => {
   } else if (event.key === 'CapsLock') {
     makeCaps(capsLockOn);
     return;
+  } else if (event.key === 'Tab') {
+    event.preventDefault();
+    inputField.value += '\t';
   }
   keys.forEach((key) => {
-    if (event.key === key.getAttribute('keyname') || event.key === key.getAttribute('lowerCaseName') || event.code === key.getAttribute('keyname')) {
+    if (event.key === key.getAttribute('keyname') || event.key === key.getAttribute('lowerCaseName') || event.code === key.getAttribute('keyname') || event.key === key.getAttribute('keyru') || event.key === key.getAttribute('ruLowerCase')) {
       key.classList.add('active');
     }
   });
