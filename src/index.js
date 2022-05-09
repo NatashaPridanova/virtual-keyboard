@@ -274,7 +274,7 @@ document.addEventListener('keypress', (event) => {
     inputField.value += '\n\r';
   }
   keys.forEach((key) => {
-    if (event.key === key.getAttribute('keyname') || event.key === key.getAttribute('lowerCaseName') || event.code === key.getAttribute('keyname') || event.key === key.getAttribute('keyru') || event.key === key.getAttribute('ruLowerCase')) {
+    if (event.key === key.getAttribute('keyname') || event.key === key.getAttribute('lowerCaseName') || event.code === key.getAttribute('keyname') || event.key === key.getAttribute('keyru') || event.key === key.getAttribute('ruLowerCase') || event.key === key.getAttribute('enShift')) {
       key.classList.add('active');
     }
   });
@@ -299,7 +299,7 @@ document.addEventListener('keydown', (event) => {
     inputField.value += '\t';
   }
   keys.forEach((key) => {
-    if (event.key === key.getAttribute('keyname') || event.key === key.getAttribute('lowerCaseName') || event.code === key.getAttribute('keyname') || event.key === key.getAttribute('keyru') || event.key === key.getAttribute('ruLowerCase')) {
+    if (event.key === key.getAttribute('keyname') || event.key === key.getAttribute('lowerCaseName') || event.code === key.getAttribute('keyname') || event.key === key.getAttribute('keyru') || event.key === key.getAttribute('ruLowerCase') || event.key === key.getAttribute('enShift')) {
       key.classList.add('active');
     }
   });
@@ -318,7 +318,7 @@ document.addEventListener('keydown', (event) => {
 document.addEventListener('keyup', (event) => {
   if (event.key === 'CapsLock') return;
   keys.forEach((key) => {
-    if (event.key === key.getAttribute('keyname') || event.key === key.getAttribute('lowerCaseName') || event.code === key.getAttribute('keyname') || event.key === key.getAttribute('keyru') || event.key === key.getAttribute('ruLowerCase')) {
+    if (event.key === key.getAttribute('keyname') || event.key === key.getAttribute('lowerCaseName') || event.code === key.getAttribute('keyname') || event.key === key.getAttribute('keyru') || event.key === key.getAttribute('ruLowerCase') || event.key === key.getAttribute('enShift')) {
       key.classList.remove('active');
       key.classList.add('remove');
     }
@@ -337,7 +337,9 @@ keys.forEach((key) => {
   key.setAttribute('data-i18', `${key.getAttribute('lowerCaseName')}`);
   const RU_VAL = i18Obj.ru;
   const RU_SHIFT_VAL = i18Obj.ruShift;
+  const EN_SHIFT_VAL = i18Obj.enShift;
   key.setAttribute('keyru', `${RU_VAL[key.dataset.i18]}`);
+  key.setAttribute('enShift', `${EN_SHIFT_VAL[key.dataset.i18]}`);
   key.setAttribute('ruLowerCase', `${RU_SHIFT_VAL[key.dataset.i18]}`);
 });
 
@@ -353,3 +355,52 @@ function getLocalStorage() {
   }
 }
 window.addEventListener('load', getLocalStorage);
+
+keyboardBtns.addEventListener('click', (event) => {
+  const pressedBtn = event.target;
+  if (!pressedBtn.classList.contains('key')) return;
+  if (pressedBtn.classList.contains('key_enter')) {
+    inputField.value += '\n\r';
+    return;
+  }
+  if (pressedBtn.classList.contains('key_space')) {
+    inputField.value += ' ';
+    return;
+  }
+  if (pressedBtn.classList.contains('key_backspace')) {
+    inputField.value = inputField.value.slice(0, -1);
+    return;
+  }
+  if (pressedBtn.getAttribute('keyname') === 'ArrowUp') {
+    inputField.value += '▲';
+    return;
+  }
+  if (pressedBtn.getAttribute('keyname') === 'ArrowDown') {
+    inputField.value += '▼';
+    return;
+  }
+  if (pressedBtn.getAttribute('keyname') === 'ArrowRight') {
+    inputField.value += '▶';
+    return;
+  }
+  if (pressedBtn.getAttribute('keyname') === 'ArrowLeft') {
+    inputField.value += '◀';
+    return;
+  }
+  if (pressedBtn.getAttribute('keyname') === 'CapsLock') {
+    makeCaps(capsLockOn);
+    return;
+  }
+  if (pressedBtn.getAttribute('keyname') === 'Tab') {
+    event.preventDefault();
+    inputField.value += '\t';
+    return;
+  }
+  if (!pressedBtn.classList.contains('key_special')) {
+    if (langMode === 'ru') {
+      inputField.value += event.target.getAttribute('keyru');
+    } else if (langMode === 'en') {
+      inputField.value += event.target.getAttribute('keyname');
+    }
+  }
+});
