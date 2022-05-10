@@ -5,6 +5,7 @@ import i18Obj from './typesOfKeys';
 
 let langMode = 'en';
 let capsLockOn = false;
+let shiftOn = false;
 
 function drawKeyboard(lang) {
   const keysToDraw = document.querySelectorAll('[data-i18]');
@@ -182,6 +183,7 @@ wrapper.appendChild(paragraph2);
 
 const keys = document.querySelectorAll('.key');
 const capsKey = document.querySelector('.key_capslock');
+const shiftKey = document.querySelector('.key_shiftl');
 
 function makeCaps(isCapsLock) {
   if (!isCapsLock) {
@@ -207,12 +209,37 @@ function makeCaps(isCapsLock) {
   });
 }
 
+function makeShift(isShift) {
+  if (!isShift) {
+    if (langMode === 'en') {
+      drawKeyboard('enShift');
+    } else if (langMode === 'ru') {
+      drawKeyboard('ruShift');
+    }
+
+    shiftOn = true;
+    shiftKey.classList.toggle('active');
+    return;
+  }
+  shiftOn = false;
+  shiftKey.classList.toggle('active');
+  if (langMode === 'enShift') {
+    drawKeyboard('en');
+  } else if (langMode === 'ruShift') {
+    drawKeyboard('ru');
+  }
+}
+
 function ctrlListener(e) {
   if (e.code === 'AltLeft') {
     if (langMode === 'en') {
       drawKeyboard('ru');
     } else if (langMode === 'ru') {
       drawKeyboard('en');
+    } else if (langMode === 'ruShift') {
+      drawKeyboard('enShift');
+    } else if (langMode === 'enShift') {
+      drawKeyboard('ruShift');
     }
   } else {
     document.removeEventListener('keyup', ctrlListener);
@@ -268,8 +295,57 @@ for (let i = 0; i < keys.length; i += 1) {
 
 document.addEventListener('keypress', (event) => {
   event.preventDefault();
+
   if (event.key !== 'Enter') {
-    inputField.value += event.key;
+    keys.forEach((key) => {
+      if (event.key === key.getAttribute('keyname')) {
+        switch (langMode) {
+          case 'enShift':
+            inputField.value += key.getAttribute('enShift');
+            break;
+          case 'ru':
+            inputField.value += key.getAttribute('keyru');
+            break;
+          case 'ruShift':
+            inputField.value += key.getAttribute('rulowercase');
+            break;
+          case 'en':
+            inputField.value += key.getAttribute('keyname');
+            break;
+          default:
+            inputField.value += '';
+            break;
+        }
+      }
+      if (event.key === key.getAttribute('enShift') || event.key === key.getAttribute('rulowercase')) {
+        switch (langMode) {
+          case 'enShift':
+            inputField.value += key.getAttribute('enShift');
+            break;
+          case 'ruShift':
+            inputField.value += key.getAttribute('ruLowerCase');
+            break;
+          case 'ru':
+            if (capsLockOn) {
+              inputField.value += key.getAttribute('rulowercase');
+            } else {
+              inputField.value += key.getAttribute('keyru');
+            }
+            break;
+          case 'en':
+            if (capsLockOn) {
+              inputField.value += key.getAttribute('enShift');
+            } else {
+              inputField.value += key.getAttribute('keyname');
+            }
+            break;
+          default:
+
+            inputField.value += '';
+            break;
+        }
+      }
+    });
   } else if (event.key === 'Enter') {
     inputField.value += '\n\r';
   }
@@ -297,6 +373,8 @@ document.addEventListener('keydown', (event) => {
   } else if (event.key === 'Tab') {
     event.preventDefault();
     inputField.value += '\t';
+  } else if (event.code === 'Space') {
+    inputField.value += ' ';
   }
   keys.forEach((key) => {
     if (event.key === key.getAttribute('keyname') || event.key === key.getAttribute('lowerCaseName') || event.code === key.getAttribute('keyname') || event.key === key.getAttribute('keyru') || event.key === key.getAttribute('ruLowerCase') || event.key === key.getAttribute('enShift')) {
@@ -391,12 +469,24 @@ keyboardBtns.addEventListener('click', (event) => {
     makeCaps(capsLockOn);
     return;
   }
+
+  if (pressedBtn.getAttribute('keyname') === 'ShiftLeft') {
+    makeShift(shiftOn);
+  }
   if (pressedBtn.getAttribute('keyname') === 'Tab') {
     event.preventDefault();
     inputField.value += '\t';
     return;
   }
   if (!pressedBtn.classList.contains('key_special')) {
+    if (capsLockOn) {
+      if (langMode === 'ru') {
+        inputField.value += event.target.getAttribute('rulowercase');
+      } else if (langMode === 'en') {
+        inputField.value += event.target.getAttribute('enshift');
+      }
+      return;
+    }
     if (langMode === 'ru') {
       inputField.value += event.target.getAttribute('keyru');
     } else if (langMode === 'en') {
