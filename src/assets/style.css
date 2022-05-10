@@ -1,0 +1,134 @@
+        @font-face {
+            font-family: 'Montserrat';
+            src: url('./Montserrat-Regular.ttf');
+            font-weight: 400;
+            font-style: normal;
+        }
+        
+        .wrapper {
+            width: calc(100% - 40px);
+            min-width: 750px;
+            margin: 0 auto;
+            font-family: 'Montserrat';
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .keyboard-wrapper {
+            max-width: 1000px;
+            width: 90%;
+            height: 530px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .keyboard-btns {
+            width: 100%;
+            height: 440px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1%;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .key {
+            width: 5.5%;
+            height: 18%;
+            border-radius: 15%;
+            margin: 1px;
+            background-color: #9FE2BF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.2s;
+        }
+        
+        .key_special {
+            background-color: #FFBF00;
+        }
+        
+        .key_arrow {
+            background-color: #FF7F50;
+        }
+        
+        .key_backspace {
+            width: 10%;
+            font-size: 12px;
+        }
+        
+        .key_tab,
+        .key_bslash {
+            width: 7.5%;
+        }
+        
+        .key_enter,
+        .key_shiftl {
+            width: 13%;
+        }
+        
+        .key_shiftr {
+            width: 8%;
+        }
+        
+        .key_enter,
+        .key_space {
+            background-color: #DE3163;
+        }
+        
+        .key_space {
+            width: 38%;
+        }
+        
+        .key_capslock {
+            width: 8%;
+            font-size: 9px;
+        }
+        
+        .key_ctrl {
+            width: 8%;
+        }
+        
+        .text {
+            width: 100%;
+            height: 90px;
+            margin-bottom: 30px;
+            overflow: auto;
+            outline: none;
+            font-size: 20px;
+            line-height: 0.8em;
+            padding-left: 20px;
+            transition: 0.2s;
+        }
+        
+        .paragraph {
+            margin-top: 20px;
+        }
+        
+        .key:hover {
+            background-color: #17A589;
+            cursor: pointer;
+        }
+        
+        .key.active {
+            background-color: #17A589;
+        }
+        
+        .key.remove {
+            animation: keys_animation 0.5s forwards;
+        }
+        
+        @keyframes keys_animation {
+            0% {
+                background-color: #17A589;
+            }
+            100% {
+                background-color: #17A589;
+            }
+        }
